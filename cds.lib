@@ -1,0 +1,16 @@
+# Cadence Virtuoso Library Definition File (cds.lib)
+# Project: Analog Integrated Circuits & Operational Amplifiers (TSMC 180nm CMOS)
+# University of Tehran - ECE Department
+
+# Cadence Default Libraries (Reference)
+# DEFINE analogLib $CDS_DIR/tools/dfII/etc/cdslib/artist/analogLib
+# DEFINE basic $CDS_DIR/tools/dfII/etc/cdslib/basic
+# DEFINE tsmc18rf $TSMC18RF_DIR/tsmc18rf
+
+# Project Cell Libraries
+DEFINE ElecIII_CA1 ./01-mosfet-characterization-cascode/cadence_oa
+DEFINE ElecIII_CA2 ./02-cmfb-biasing-twostage-opamp/cadence_oa
+DEFINE ElecIII_CA3_Final ./03-twostage-miller-cmfb-opamp-final/cadence_oa
+DEFINE Lab1_SingleStage ./04-cadence-virtuoso-lab-modules/Lab1_SingleStage_CS_CG_Cascode/cadence_oa
+DEFINE Lab4_Feedback ./04-cadence-virtuoso-lab-modules/Lab4_Feedback_Frequency_Compensation/cadence_oa
+DEFINE Lab5_Layout ./04-cadence-virtuoso-lab-modules/Lab5_Layout_DRC_LVS_PostLayout/cadence_oa

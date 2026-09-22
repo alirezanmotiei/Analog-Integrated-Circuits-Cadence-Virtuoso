@@ -1,0 +1,24 @@
+# Cadence Virtuoso locks and temp files
+*.cdslck*
+*.tmp*
+*.tmp.a
+*.log
+*.valLog
+cds.lib.*
+*.ahdlSimDB/
+*.bck
+*~
+# Simulation outputs and caches
+*.run/
+*.sim/
+*.raw/
+simulation/
+artist_states/
+spectre.out
+ocean.log
+
+# System & OS
+.DS_Store
+Thumbs.db
+desktop.ini
+*.bak

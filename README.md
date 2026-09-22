@@ -31,6 +31,62 @@ This repository documents the end-to-end design, analytical small-signal derivat
 
 ---
 
+## Circuit Architecture & Block Diagrams
+
+### 1. Two-Stage Miller-Compensated Op-Amp Architecture
+```mermaid
+graph LR
+    subgraph Stage1["Stage 1: Differential Input Stage"]
+        VinP["V_in+"] --> DiffPair["NMOS Differential Pair (M1, M2)"]
+        VinM["V_in-"] --> DiffPair
+        Bias1["Tail Current Source (M0)"] --> DiffPair
+        DiffPair --> CascodeLoad["Active PMOS Cascode Loads (M3, M4)"]
+    end
+
+    subgraph Stage2["Stage 2: High-Gain Output Stage"]
+        CascodeLoad --> Driver["Common-Source Driver (M7)"]
+        Bias2["Current Source Load (M6)"] --> Driver
+        Driver --> Vout["Differential Output V_out"]
+    end
+
+    subgraph MillerComp["Miller Frequency Compensation"]
+        Driver -.->|"C_c = 1.2 pF + R_z (Nulling Resistor)"| CascodeLoad
+    end
+```
+
+### 2. Continuous-Time Common-Mode Feedback (CT-CMFB) Loop
+```mermaid
+graph TD
+    subgraph CoreAmp["Differential Amplifier Core"]
+        InP["V_in+"] --> Core["Differential Gain Core"]
+        InM["V_in-"] --> Core
+        Core --> OutP["V_out+"]
+        Core --> OutM["V_out-"]
+    end
+
+    subgraph CMFBLoop["Common-Mode Feedback Regulation Loop"]
+        OutP --> CMSense["Resistive/Capacitive CM Sensing Network"]
+        OutM --> CMSense
+        CMSense --> Vcm_out["V_cm,out"]
+        Vref["V_ref,cm = 0.90 V"] --> CMErrAmp["CMFB Error Differential Amplifier"]
+        Vcm_out --> CMErrAmp
+        CMErrAmp -->|"V_ctrl (Dynamic Tail Gate Bias)"| Core
+    end
+```
+
+---
+
+## Topology Benchmark & Verification Summary
+
+| Circuit Topology | Technology | $V_{DD}$ | DC Gain ($A_{v0}$) | Unity-Gain Bandwidth | Phase Margin | CMRR | Power Dissipation | Physical Verification |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Folded-Cascode OTA (CA2)** | TSMC 180nm | $1.8\,\text{V}$ | $62.0\,\text{dB}$ | $524.5\,\text{MHz}$ | $> 65.0^\circ$ | $> 70.0\,\text{dB}$ | $1.61\,\text{mW}$ | Spectre Verified |
+| **Two-Stage Miller Op-Amp (CA3)** | TSMC 180nm | $1.8\,\text{V}$ | **$64.5\,\text{dB}$** | **$357.2\,\text{MHz}$** | **$74.2^\circ$** | **$78.4\,\text{dB}$** | **$1.95\,\text{mW}$** | **PVT 6-Corner Verified** |
+| **Fully-Differential Op-Amp (Lab 4)** | TSMC 180nm | $1.8\,\text{V}$ | $63.8\,\text{dB}$ | $310.0\,\text{MHz}$ | $65.2^\circ$ | $74.5\,\text{dB}$ | $1.85\,\text{mW}$ | Spectre Verified |
+| **Full-Custom Silicon Layout (Lab 5)** | TSMC 180nm | $1.8\,\text{V}$ | $60.2\,\text{dB}$ | $338.0\,\text{MHz}$ | $71.0^\circ$ | $75.0\,\text{dB}$ | $2.02\,\text{mW}$ | **100% DRC & LVS Clean** |
+
+---
+
 ## Repository Architecture
 
 ```text

@@ -1,0 +1,18 @@
+# ==============================================================================
+# Git Attributes - Language Detection & Overrides for Cadence Virtuoso IC
+# ==============================================================================
+
+# Mark binary OpenAccess design databases and tags as vendored/binary
+*.oa linguist-vendored
+*.dm linguist-vendored
+*.tag linguist-vendored
+*.oalib linguist-vendored
+*.lib linguist-vendored
+
+# Ensure Python analytical benchmarks and scripts are primary detectable language
+*.py linguist-detectable=true linguist-language=Python
+
+# Documentation & Assets
+*.pdf linguist-documentation
+*.png linguist-documentation
+docs/* linguist-documentation

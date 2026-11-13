@@ -1,76 +1,75 @@
 # Analog Integrated Circuits & Operational Amplifier Design in Cadence Virtuoso (TSMC 180nm CMOS)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Technology: TSMC 180nm](https://img.shields.io/badge/Process-TSMC%20180nm%20CMOS-blue.svg)](#technology--specifications)
+[![Technology: TSMC 180nm](https://img.shields.io/badge/Process-TSMC%20180nm%20CMOS-blue.svg)](#ca3-three-corner-pvt-summary-two-stage-miller-op-amp)
 [![EDA: Cadence Virtuoso](https://img.shields.io/badge/EDA-Cadence%20Virtuoso%20IC6-red.svg)](#cadence-virtuoso-setup--reproduction)
-[![Simulator: Spectre](https://img.shields.io/badge/Simulator-Spectre%20ADE--L%2FXL-brightgreen.svg)](#simulation-methodology)
+[![Simulator: Spectre](https://img.shields.io/badge/Simulator-Spectre%20ADE--L-brightgreen.svg)](#topology-benchmark--verification-summary)
 [![Institution: University of Tehran](https://img.shields.io/badge/Institution-University%20of%20Tehran-003366.svg)](https://ut.ac.ir)
 
-Comprehensive engineering portfolio for **Analog Integrated Circuit Design**, **High-Gain Operational Amplifiers**, and **Cadence Virtuoso Physical Silicon Design** developed in the Department of Electrical and Computer Engineering at the **University of Tehran**.
+Engineering portfolio for **Analog Integrated Circuit Design** and **CMOS Operational Amplifiers** completed in the School of Electrical and Computer Engineering at the **University of Tehran**.
 
-This repository documents the end-to-end design, analytical small-signal derivation, Cadence Virtuoso schematic capture, Spectre simulation, PVT corner verification, and full-custom CMOS physical mask layout in **TSMC 180nm CMOS technology ($V_{DD} = 1.8\,\text{V}$)**.
+This repository contains the Cadence Virtuoso OpenAccess design libraries (`TSMC 180nm CMOS`, `V_DD = 1.8 V`), Spectre simulation results across process-voltage-temperature (PVT) corners, an analytical Python hand-design benchmark script, course lab manuals, and full project reports for **Electronics III** and **Electronics III Laboratory**.
 
 ---
 
-## Portfolio Highlights & Specifications
+## CA3 Three-Corner PVT Summary (Two-Stage Miller Op-Amp)
 
-| Parameter / Metric | Design Specification Target | Achieved Nominal (TT, 27°C) | Worst-Case Corner (SS, 120°C) | Best-Case Corner (FF, -40°C) |
-|:---|:---:|:---:|:---:|:---:|
-| **Process Technology** | TSMC 180nm CMOS | 180nm Bulk CMOS | 180nm Bulk CMOS | 180nm Bulk CMOS |
-| **Supply Voltage ($V_{DD}$)** | $1.8\,\text{V} \pm 10\%$ | $1.8\,\text{V}$ | $1.62\,\text{V}$ | $1.98\,\text{V}$ |
-| **Low-Frequency Open-Loop Gain ($A_v$)** | $\ge 60.0\,\text{dB}$ | **$64.5\,\text{dB}$** | $59.2\,\text{dB}$ | $68.7\,\text{dB}$ |
-| **Unity-Gain Bandwidth ($\text{UGBW}$)** | $\ge 300\,\text{MHz}$ | **$357.2\,\text{MHz}$** | $312.0\,\text{MHz}$ | $410.5\,\text{MHz}$ |
-| **Phase Margin ($\text{PM}$)** | $\ge 65.0^\circ$ | **$74.2^\circ$** | $70.5^\circ$ | $77.8^\circ$ |
-| **Common-Mode Rejection Ratio ($\text{CMRR}$)** | $\ge 70.0\,\text{dB}$ | **$78.4\,\text{dB}$** | $74.1\,\text{dB}$ | $81.2\,\text{dB}$ |
-| **Power Supply Rejection Ratio ($\text{PSRR}^+$)** | $\ge 60.0\,\text{dB}$ | **$66.8\,\text{dB}$** | $62.4\,\text{dB}$ | $70.1\,\text{dB}$ |
-| **CMFB Loop Bandwidth** | $\ge 500\,\text{MHz}$ | **$938.6\,\text{MHz}$** | $780.2\,\text{MHz}$ | $1.08\,\text{GHz}$ |
-| **Total Quiescent Current ($I_{tot}$)** | $\le 1.2\,\text{mA}$ | **$1.08\,\text{mA}$** | $0.94\,\text{mA}$ | $1.21\,\text{mA}$ |
-| **Total Power Consumption ($P_D$)** | $\le 2.2\,\text{mW}$ | **$1.95\,\text{mW}$** | $1.52\,\text{mW}$ | $2.39\,\text{mW}$ |
-| **Differential Output Voltage Swing** | $\ge 1.2\,\text{V}_{p-p}$ | **$1.42\,\text{V}_{p-p}$** | $1.31\,\text{V}_{p-p}$ | $1.54\,\text{V}_{p-p}$ |
-| **Slew Rate ($\text{SR}$, $C_L = 2\,\text{pF}$)** | $\ge 200\,\text{V}/\mu\text{s}$ | **$265\,\text{V}/\mu\text{s}$** | $215\,\text{V}/\mu\text{s}$ | $310\,\text{V}/\mu\text{s}$ |
+Nominal and corner Spectre simulations for the tuned **PMOS-input Two-Stage Miller Op-Amp** (`L = 360 nm`, `I_0 = 185 uA`, `C_c = 3 pF`, `R_z = 1 kOhm`) from `CA3_Final_Project_TwoStage_Miller_CMFB_OpAmp.pdf`:
+
+| Parameter / Metric | Nominal (`TT, +27°C`) | Fast Corner (`FF, -40°C`) | Slow Corner (`SS, +120°C`) |
+|:---|:---:|:---:|:---:|
+| **Process Technology** | TSMC 180nm CMOS (`L = 360 nm`) | TSMC 180nm CMOS | TSMC 180nm CMOS |
+| **Supply Voltage ($V_{DD}$)** | $1.8\,\text{V}$ | $1.8\,\text{V}$ | $1.8\,\text{V}$ |
+| **Open-Loop DC Gain ($A_{v0}$)** | **$64.5\,\text{dB}$** | $60.2\,\text{dB}$ | $63.0\,\text{dB}$ |
+| **Unity-Gain Bandwidth ($\text{UGBW}$)** | **$357\,\text{MHz}$** | $520\,\text{MHz}$ | $233\,\text{MHz}$ |
+| **Phase Margin ($\text{PM}$)** | **$74^\circ$** | $60^\circ$ | $92^\circ$ |
+| **Max Common-Mode Rejection Ratio ($\text{CMRR}$)** | **$72.6\,\text{dB}$** | $68.1\,\text{dB}$ | $71.7\,\text{dB}$ |
+| **Max Output Voltage Swing** | **$1.41\,\text{V}$** | $1.51\,\text{V}$ | $1.34\,\text{V}$ |
+| **Total Quiescent Current (AC / DC)** | **$545\,\mu\text{A}$ / $525\,\mu\text{A}$** | $557\,\mu\text{A}$ / $526\,\mu\text{A}$ | $543\,\mu\text{A}$ / $525\,\mu\text{A}$ |
 
 ---
 
 ## Circuit Architecture & Block Diagrams
 
-### 1. Two-Stage Miller-Compensated Op-Amp Architecture
+### 1. CA2: Folded-Cascode Fully Differential OTA with Continuous-Time CMFB
 ```mermaid
-graph LR
-    subgraph Stage1["Stage 1: Differential Input Stage"]
-        VinP["V_in+"] --> DiffPair["NMOS Differential Pair (M1, M2)"]
-        VinM["V_in-"] --> DiffPair
-        Bias1["Tail Current Source (M0)"] --> DiffPair
-        DiffPair --> CascodeLoad["Active PMOS Cascode Loads (M3, M4)"]
+graph TD
+    subgraph CoreOTA["Folded-Cascode Differential Core (M18-M30)"]
+        InP["V_in+"] --> InputDiff["PMOS Input Pair (M23, M25)"]
+        InM["V_in-"] --> InputDiff
+        TailBias["Bias Current (~201 uA)"] --> InputDiff
+        InputDiff --> CascodeStack["Folded Cascode Output Branches (V_out+, V_out-)"]
     end
 
-    subgraph Stage2["Stage 2: High-Gain Output Stage"]
-        CascodeLoad --> Driver["Common-Source Driver (M7)"]
-        Bias2["Current Source Load (M6)"] --> Driver
-        Driver --> Vout["Differential Output V_out"]
-    end
-
-    subgraph MillerComp["Miller Frequency Compensation"]
-        Driver -.->|"C_c = 1.2 pF + R_z (Nulling Resistor)"| CascodeLoad
+    subgraph CMFBLoop["Continuous-Time CMFB Regulation (938.64 MHz BW)"]
+        CascodeStack --> OutP["V_out+"]
+        CascodeStack --> OutM["V_out-"]
+        OutP --> Sense["Capacitive/Resistive CM Sensing"]
+        OutM --> Sense
+        Sense --> Vcm["V_cm,out (~0.90 V)"]
+        Vcm --> ErrAmp["CMFB Control Loop"]
+        ErrAmp -->|"V_CMFB Gate Bias (M26, M27)"| CascodeStack
     end
 ```
 
-### 2. Continuous-Time Common-Mode Feedback (CT-CMFB) Loop
+### 2. CA3: PMOS-Input Two-Stage Miller-Compensated Op-Amp
 ```mermaid
-graph TD
-    subgraph CoreAmp["Differential Amplifier Core"]
-        InP["V_in+"] --> Core["Differential Gain Core"]
-        InM["V_in-"] --> Core
-        Core --> OutP["V_out+"]
-        Core --> OutM["V_out-"]
+graph LR
+    subgraph Stage1["Stage 1: PMOS Differential Stage"]
+        VinP["V_in+ (M3)"] --> DiffPair["PMOS Input Pair (M2, M3)"]
+        VinM["V_in- (M2)"] --> DiffPair
+        Bias1["Tail Current Mirror (M0, M1)"] --> DiffPair
+        DiffPair --> ActiveLoad["NMOS Current-Mirror Load (M4, M5)"]
     end
 
-    subgraph CMFBLoop["Common-Mode Feedback Regulation Loop"]
-        OutP --> CMSense["Resistive/Capacitive CM Sensing Network"]
-        OutM --> CMSense
-        CMSense --> Vcm_out["V_cm,out"]
-        Vref["V_ref,cm = 0.90 V"] --> CMErrAmp["CMFB Error Differential Amplifier"]
-        Vcm_out --> CMErrAmp
-        CMErrAmp -->|"V_ctrl (Dynamic Tail Gate Bias)"| Core
+    subgraph Stage2["Stage 2: Common-Source Output Stage"]
+        ActiveLoad --> Driver["NMOS CS Driver (M7)"]
+        Bias2["PMOS Active Load (M6)"] --> Driver
+        Driver --> Vout["V_out"]
+    end
+
+    subgraph MillerComp["Tuned Miller Compensation"]
+        Driver -.->|"C_c = 3 pF + R_z = 1 kOhm"| ActiveLoad
     end
 ```
 
@@ -78,12 +77,12 @@ graph TD
 
 ## Topology Benchmark & Verification Summary
 
-| Circuit Topology | Technology | $V_{DD}$ | DC Gain ($A_{v0}$) | Unity-Gain Bandwidth | Phase Margin | CMRR | Power Dissipation | Physical Verification |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Folded-Cascode OTA (CA2)** | TSMC 180nm | $1.8\,\text{V}$ | $62.0\,\text{dB}$ | $524.5\,\text{MHz}$ | $> 65.0^\circ$ | $> 70.0\,\text{dB}$ | $1.61\,\text{mW}$ | Spectre Verified |
-| **Two-Stage Miller Op-Amp (CA3)** | TSMC 180nm | $1.8\,\text{V}$ | **$64.5\,\text{dB}$** | **$357.2\,\text{MHz}$** | **$74.2^\circ$** | **$78.4\,\text{dB}$** | **$1.95\,\text{mW}$** | **PVT 6-Corner Verified** |
-| **Fully-Differential Op-Amp (Lab 4)** | TSMC 180nm | $1.8\,\text{V}$ | $63.8\,\text{dB}$ | $310.0\,\text{MHz}$ | $65.2^\circ$ | $74.5\,\text{dB}$ | $1.85\,\text{mW}$ | Spectre Verified |
-| **Full-Custom Silicon Layout (Lab 5)** | TSMC 180nm | $1.8\,\text{V}$ | $60.2\,\text{dB}$ | $338.0\,\text{MHz}$ | $71.0^\circ$ | $75.0\,\text{dB}$ | $2.02\,\text{mW}$ | **100% DRC & LVS Clean** |
+| Coursework Module | Architecture & Technology | Supply ($V_{DD}$) | DC Gain ($A_{v0}$) | Unity-Gain BW | Phase Margin / Notes | Power / Current | Verification Scope |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|
+| **CA1 (`Q1`-`Q10`, `01-`)** | 180nm LC/SC Device Physics & CS Amplifier | $1.8\,\text{V}$ | $15.85\,\text{dB}$ (CS passband) | $f_T$ up to $72.81\,\text{GHz}$ (SC) | $R_{in}=64.29\,\text{k}\Omega$, $R_{out}=3.67\,\text{k}\Omega$ | Spectre DC / AC / Temp | Sweeps & Corners |
+| **CA2 (`part1`, `02-`)** | Folded-Cascode Fully Differential OTA + CMFB | $1.8\,\text{V}$ | $62.58\,\text{dB}$ ($f_{-3\text{dB}}=416.87\,\text{kHz}$) | **$524.5\,\text{MHz}$** | CMFB $-3\text{dB}$ BW: **$938.64\,\text{MHz}$** | **$1.083\,\text{mA}$** ($1.949\,\text{mW}$) | Nominal Spectre + `region=2` |
+| **CA3 (`Total`, `03-`)** | PMOS-Input Two-Stage Miller Op-Amp (`L=360nm`) | $1.8\,\text{V}$ | **$64.5\,\text{dB}$** | **$357\,\text{MHz}$** | **$\text{PM}=74^\circ$**, **$\text{CMRR}=72.6\,\text{dB}$** | **$545\,\mu\text{A}$** (~$0.98\,\text{mW}$) | **3-Corner PVT (`TT`/`FF`/`SS`)** |
+| **Lab 1-5 (`04-`)** | Single-Stage, Diff Pair, Bias, Feedback, Physical Layout | $1.8\,\text{V}$ | Lab Manuals (`1`-`5`) | OA Cellviews (`Lab1`, `Lab4`, `Lab5`) | Includes `TotalAMP` (`layout.oa`) | Lab Curriculum | Virtuoso OpenAccess |
 
 ---
 
@@ -91,214 +90,154 @@ graph TD
 
 ```text
 Analog-Integrated-Circuits-Cadence-Virtuoso/
-├── 01-mosfet-characterization-cascode/      # Module 1: 180nm Device Characterization & Cascode
+├── 01-mosfet-characterization-cascode/      # CA1: 180nm LC vs. SC Characterization & CS Stage
 │   └── cadence_oa/                         # Cadence OpenAccess database (Cells Q1 to Q10)
-├── 02-cmfb-biasing-twostage-opamp/          # Module 2: Bias Distribution & High-Speed CMFB
-│   └── cadence_oa/                         # OpenAccess cellviews (Bias, CMFB, Two-Stage core)
-├── 03-twostage-miller-cmfb-opamp-final/     # Module 3: Complete Two-Stage Miller Op-Amp
+├── 02-cmfb-biasing-twostage-opamp/          # CA2: Bias Network & Folded-Cascode OTA + CMFB
+│   └── cadence_oa/                         # OpenAccess cellview (part1)
+├── 03-twostage-miller-cmfb-opamp-final/     # CA3: Final Op-Amp OpenAccess Project Library
 │   └── cadence_oa/                         # Cells: Amplifier, Bias, CMFB_n, CMFB_p, feedback, Total
-├── 04-cadence-virtuoso-lab-modules/         # Module 4: Laboratory Curriculum & Layout
-│   ├── Lab1_SingleStage_CS_CG_Cascode/     # CS, CG, and Cascode Frequency Response
-│   ├── Lab2_Differential_Amplifiers/       # Differential Pair Small-Signal Characterization
-│   ├── Lab3_Current_Mirrors_Biasing/       # Precision Current Mirrors & Bias Networks
-│   ├── Lab4_Feedback_Frequency_Compensation/ # Negative Feedback & Miller Compensation
-│   └── Lab5_Layout_DRC_LVS_PostLayout/     # Full-Custom Layout, DRC, LVS & Post-Layout Extraction
+├── 04-cadence-virtuoso-lab-modules/         # Electronics III Lab Manuals & OA Libraries
+│   ├── Lab1_SingleStage_CS_CG_Cascode/     # Lab1_Manual.pdf + cadence_oa (CS_Amp, CG_Amp, Cascode_Amp)
+│   ├── Lab2_Differential_Amplifiers/       # Lab2_Manual.pdf
+│   ├── Lab3_Current_Mirrors_Biasing/       # Lab3_Manual.pdf
+│   ├── Lab4_Feedback_Frequency_Compensation/ # Lab4_Manual.pdf + cadence_oa (Amplifier, Bias, CMFB, OPAMP)
+│   └── Lab5_Layout_DRC_LVS_PostLayout/     # Lab5_Manual.pdf + cadence_oa (TotalAMP layout.oa & schematic)
+├── analysis/
+│   └── opamp_analytical_bench.py           # Small-signal hand-design verifier (matches CA3 derivations)
 ├── docs/
-│   └── media/                              # Waveforms, Spectre testbenches, and EDA screenshots
-├── reports/                                # Complete academic project reports (PDF)
-│   ├── CA1_MOSFET_Characterization_Cascode_AlirezaNajafi.pdf
-│   ├── CA2_CMFB_Biasing_OpAmp_AlirezaNajafi.pdf
-│   └── CA3_Final_Project_TwoStage_Miller_CMFB_OpAmp.pdf
+│   └── media/                              # Cleaned Virtuoso schematics and Spectre plots
+├── reports/                                # Academic project reports (PDF)
+│   ├── CA1_MOSFET_Characterization_Cascode_AlirezaNajafi.pdf   # 22 pages
+│   ├── CA2_CMFB_Biasing_OpAmp_AlirezaNajafi.pdf                # 14 pages
+│   └── CA3_Final_Project_TwoStage_Miller_CMFB_OpAmp.pdf        # 8 pages
 ├── cds.lib                                 # Top-level Cadence Virtuoso library map
-├── .gitignore                              # Cadence lock (.cdslck) & temporary file exclusions
+├── .gitignore                              # Excludes Cadence locks (.cdslck) & scratch files
 ├── LICENSE                                 # MIT License
-└── README.md                               # Comprehensive engineering documentation
+└── README.md                               # Repository documentation
 ```
 
 ---
 
 ## Detailed Technical Modules
 
-### 1. MOSFET Physics & High-Gain Cascode Design (`01-mosfet-characterization-cascode`)
+### 1. 180nm MOSFET Physics & CS Impedance Characterization (`01-mosfet-characterization-cascode`)
 
-#### 180nm Device Physics Characterization
-Comprehensive characterization was performed for standard threshold NMOS and PMOS devices across channel lengths ($L = 180\,\text{nm}$ to $1.0\,\mu\text{m}$) and channel widths ($W = 1.0\,\mu\text{m}$ to $50\,\mu\text{m}$):
-- **Long-Channel vs. Short-Channel Velocity Saturation**:
-  $$\text{Long Channel: } I_D = \frac{1}{2} \mu C_{ox} \frac{W}{L} (V_{GS} - V_{th})^2 (1 + \lambda V_{DS})$$
-  $$\text{Short Channel: } I_D = v_{sat} C_{ox} W \frac{(V_{GS} - V_{th})^2}{(V_{GS} - V_{th}) + \mathcal{E}_c L}$$
-- **Transconductance Efficiency ($g_m / I_D$)**: Evaluated to identify optimum inversion regions (moderate inversion: $12\,\text{V}^{-1} \le g_m/I_D \le 18\,\text{V}^{-1}$) for maximizing gain-bandwidth product under strict current budgets.
-- **Dynamic Output Resistance ($r_{ds}$)**: Extracted directly from Spectre AC output admittance parameter ($r_{ds} = 1 / g_{ds}$). Verified linear scaling with physical gate length $L$.
+#### Long-Channel vs. Short-Channel Parameter Extraction (CA1, `nmos_lc` / `nmos_sc` / `pmos_lc` / `pmos_sc`)
+Spectre DC, AC, temperature, and geometry sweeps (`W` and `L`) in TSMC 180nm verified velocity saturation and channel-length modulation effects:
+- **Long-Channel vs. Short-Channel Extracted Parameters**:
+  - `nmos_lc`: $\mu_n C_{ox} = 376\,\mu\text{A/V}^2$, $\lambda = 0.025\,\text{V}^{-1}$
+  - `nmos_sc`: $\mu_n C_{ox} = 533\,\mu\text{A/V}^2$, $\lambda = 0.114\,\text{V}^{-1}$
+  - `pmos_lc`: $\mu_p C_{ox} = 66\,\mu\text{A/V}^2$, $\lambda = 0.026\,\text{V}^{-1}$
+  - `pmos_sc`: $\mu_p C_{ox} = 94\,\mu\text{A/V}^2$, $\lambda = 0.161\,\text{V}^{-1}$
+- **Unity-Current-Gain Frequency ($f_T$, $20\log_{10}|I_s / I_g| = 0\,\text{dB}$)**:
+  - **`FF, -40°C`**: Short-channel **$72.81\,\text{GHz}$**, Long-channel **$8.24\,\text{GHz}$**
+  - **`SS, +120°C`**: Short-channel **$46.57\,\text{GHz}$**, Long-channel **$3.81\,\text{GHz}$**
+- **Common-Source AC Impedance & Passband (`CA1 Q2`)**:
+  - Midband voltage gain at **$15.85\,\text{dB}$** (marker at $4.38\,\text{Hz}$ lower roll-off), input resistance **$R_{in} = 64.29\,\text{k}\Omega$**, and output resistance **$R_{out} = 3.67\,\text{k}\Omega$**.
 
 <p align="center">
-  <img src="docs/media/input_resistance_rin_sweep.png" width="48%" alt="Input Resistance AC Sweep" />
-  <img src="docs/media/output_resistance_rout_sweep.png" width="48%" alt="Output Resistance AC Sweep" />
+  <img src="docs/media/cadence_virtuoso_schematic_environment.png" width="48%" alt="CA1 DC Response Ids and gm Sweep" />
+  <img src="docs/media/gain_step_15db.png" width="48%" alt="CA1 Q2 Common-Source AC Response" />
 </p>
 
-#### Thermal & Mobility Degradation Analysis
-Simulated across temperature sweeps ($-40^\circ\text{C} \le T \le +120^\circ\text{C}$):
-- Lattice scattering causes carrier mobility degradation: $\mu(T) = \mu_0 (T / T_0)^{-\alpha_m}$ ($\alpha_m \approx 1.5 - 2.0$).
-- Threshold voltage negative thermal coefficient: $V_{th}(T) \approx V_{th}(T_0) - \kappa_{th} (T - T_0)$ ($\kappa_{th} \approx 1.2\,\text{mV}/^\circ\text{C}$).
-- In saturation, mobility drop dominates, resulting in lower drain current and reduced transconductance $g_m$ at high temperatures.
-
-#### Telescopic Cascode Topology
-Designed in Cadence cells `Q1` through `Q10`:
-- **Voltage Gain**: $A_v \approx -g_{m1} (g_{m3} r_{o3} r_{o1} \parallel g_{m5} r_{o5} r_{o7})$.
-- **Output Impedance Boost**: $R_{out} \approx (g_{m3} r_{o3}) r_{o1} \parallel (g_{m5} r_{o5}) r_{o7}$, achieving $> 40\,\text{dB}$ gain in a single stage.
-
----
-
-### 2. Precision Biasing & Common-Mode Feedback Network (`02-cmfb-biasing-twostage-opamp`)
-
-```
-          VDD
-           │
-     ┌─────┴─────┐
-    [M6]        [M7]   (Second Stage PMOS Drivers)
-     ├───────────┤
-     │           │
-   Vout+       Vout- ──────────┐
-     │           │             │
-    [M4]        [M5]           │
-     │           │             ▼
-    GND         GND     ┌──────────────┐
-                        │ Dynamic CMFB │ ◄── Vcm_ref = 0.9V
-                        │ Sensor/Error │
-                        └──────┬───────┘
-                               │
-                               ▼ Vcm_control
-                        (Gates of M4, M5)
-```
-
-#### Multi-Node Bias Generator
-- Generated stable voltages ($V_{b1}, V_{b2}, V_{b3}, V_{b4}$) ensuring robust operation in the active saturation region ($V_{DS} \ge V_{ov}$).
-- Total bias network quiescent current: **$201.5\,\mu\text{A}$**.
-- Voltage tracking error under supply variations ($\pm 10\%$): $< 2.4\%$.
-
-#### High-Speed Common-Mode Feedback (CMFB)
-Fully differential architectures require continuous-time common-mode feedback to lock the output DC level to precisely $V_{DD}/2 = 0.9\,\text{V}$:
-- **CMFB Loop Bandwidth**: **$938.64\,\text{MHz}$** (ensuring CMFB loop dynamics remain faster than the differential signal path to suppress transient common-mode ringing).
-- Common-mode error amplifier utilizes active differential sensing with linearized resistive averaging.
-
 <p align="center">
-  <img src="docs/media/spectre_simulation_testbench_1.png" width="48%" alt="Spectre Simulation Testbench" />
-  <img src="docs/media/spectre_transient_simulation_2.png" width="48%" alt="Differential Transient Response" />
+  <img src="docs/media/input_resistance_rin_sweep.png" width="48%" alt="CA1 Q2 Input Resistance AC Sweep (64.29 kOhm)" />
+  <img src="docs/media/output_resistance_rout_sweep.png" width="48%" alt="CA1 Q2 Output Resistance AC Sweep (3.67 kOhm)" />
 </p>
 
 ---
 
-### 3. Fully Differential Two-Stage Miller Op-Amp with PVT Corners (`03-twostage-miller-cmfb-opamp-final`)
+### 2. Folded-Cascode Differential OTA & High-Speed CMFB (`02-cmfb-biasing-twostage-opamp`)
 
-#### Analytical Small-Signal Modeling & Compensation
-To achieve simultaneous high DC gain and wide bandwidth, a two-stage operational amplifier topology was synthesized:
-1. **First Stage**: NMOS input differential pair ($M_1, M_2$) with PMOS active cascode current loads ($M_3, M_4$), providing high differential gain $A_{v1} = g_{m1} (r_{o2} \parallel r_{o4})$.
-2. **Second Stage**: Common-source drivers ($M_6, M_7$) with current source loads ($M_8, M_9$), providing wide output swing $A_{v2} = g_{m7} (r_{o7} \parallel r_{o9})$.
-3. **Miller Frequency Compensation ($C_c, R_z$)**:
-   - Splitting dominant pole $\omega_{p1}$ and non-dominant pole $\omega_{p2}$:
-     $$\omega_{p1} \approx \frac{1}{R_{o1} (1 + g_{m7} R_{o2}) C_c} \approx \frac{1}{R_{o1} g_{m7} R_{o2} C_c}$$
-     $$\omega_{p2} \approx \frac{g_{m7}}{C_L}$$
-   - **Zero-Nulling Resistor ($R_z$)**: Cancels the Right-Half-Plane (RHP) zero resulting from forward path through $C_c$:
-     $$\omega_z = \frac{1}{C_c \left(\frac{1}{g_{m7}} - R_z\right)} \implies R_z \ge \frac{1}{g_{m7}}$$
-     Configured with $R_z$ in series with $C_c = 1.2\,\text{pF}$ to push the transmission zero into the Left-Half-Plane (LHP), actively improving Phase Margin to **$74.2^\circ$**.
+#### Topology & Biasing (`part1`)
+Fully differential folded-cascode OTA (`M18`-`M30`) paired with a continuous-time common-mode feedback (CMFB) loop locking the differential outputs ($V_{out+}, V_{out-}$) around $V_{DD}/2 = 0.902\,\text{V}$:
+- **Reference Branch Bias Current**: **$\approx 201\,\mu\text{A}$** (`region = 2` saturation verified across all core devices).
+- **CMFB Loop Bandwidth ($-3\,\text{dB}$)**: **$938.64\,\text{MHz}$**, keeping common-mode stabilization faster than the main signal path.
+- **Differential Open-Loop AC Performance**: **$62.58\,\text{dB}$** DC gain ($115.3\,\text{Hz}$ marker), **$416.87\,\text{kHz}$** $-3\,\text{dB}$ bandwidth, and **$524.49\,\text{MHz}$** unity-gain bandwidth (`UGBW`).
+- **Total Supply Draw**: **$1.0829\,\text{mA}$** ($1.949\,\text{mW}$ at $V_{DD} = 1.8\,\text{V}$).
 
 <p align="center">
-  <img src="docs/media/spectre_ac_analysis_bode_plot.png" width="48%" alt="AC Open-Loop Bode Plot" />
-  <img src="docs/media/gain_bandwidth_compensated.png" width="48%" alt="Compensated Gain & Phase Curves" />
+  <img src="docs/media/ca2_folded_cascode_cmfb_schematic.png" width="48%" alt="CA2 Folded-Cascode OTA with CMFB Annotated Schematic" />
+  <img src="docs/media/ca2_cmfb_bandwidth_938mhz.png" width="48%" alt="CA2 CMFB Loop Bandwidth 938.64 MHz" />
 </p>
 
-#### Multi-Corner PVT Robustness Matrix
-The design was verified against process variations, thermal extremes, and supply voltage swings:
+<p align="center">
+  <img src="docs/media/ca2_opamp_ac_gain_62db.png" width="32%" alt="CA2 Open-Loop DC Gain 62.58 dB" />
+  <img src="docs/media/ca2_opamp_ugbw_524mhz.png" width="32%" alt="CA2 Unity-Gain Bandwidth 524.49 MHz" />
+  <img src="docs/media/ca2_opamp_differential_transient.png" width="32%" alt="CA2 Differential Transient Swing Around 0.902 V" />
+</p>
 
-| Corner | Process | Supply ($V_{DD}$) | Temperature | Gain ($A_v$) | UGBW | Phase Margin | All MOS Saturation |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **Nominal** | TT | $1.80\,\text{V}$ | $+27^\circ\text{C}$ | **$64.5\,\text{dB}$** | **$357.2\,\text{MHz}$** | **$74.2^\circ$** | **PASSED (Region 2)** |
-| **Corner 1** | FF | $1.98\,\text{V}$ | $-40^\circ\text{C}$ | **$68.7\,\text{dB}$** | **$410.5\,\text{MHz}$** | **$77.8^\circ$** | **PASSED (Region 2)** |
-| **Corner 2** | FF | $1.98\,\text{V}$ | $+120^\circ\text{C}$ | **$63.1\,\text{dB}$** | **$385.0\,\text{MHz}$** | **$72.4^\circ$** | **PASSED (Region 2)** |
-| **Corner 3** | SS | $1.62\,\text{V}$ | $-40^\circ\text{C}$ | **$65.8\,\text{dB}$** | **$335.0\,\text{MHz}$** | **$75.1^\circ$** | **PASSED (Region 2)** |
-| **Corner 4** | SS | $1.62\,\text{V}$ | $+120^\circ\text{C}$ | **$59.2\,\text{dB}$** | **$312.0\,\text{MHz}$** | **$70.5^\circ$** | **PASSED (Region 2)** |
-| **Corner 5** | FS | $1.80\,\text{V}$ | $+27^\circ\text{C}$ | **$62.9\,\text{dB}$** | **$348.0\,\text{MHz}$** | **$73.0^\circ$** | **PASSED (Region 2)** |
-| **Corner 6** | SF | $1.80\,\text{V}$ | $+27^\circ\text{C}$ | **$63.4\,\text{dB}$** | **$352.0\,\text{MHz}$** | **$73.8^\circ$** | **PASSED (Region 2)** |
+---
+
+### 3. PMOS-Input Two-Stage Miller Op-Amp & 3-Corner PVT Verification (`03-twostage-miller-cmfb-opamp-final`)
+
+#### Hand Calculation vs. Spectre Tuning
+Designed in TSMC 180nm CMOS with uniform channel length $L = 360\,\text{nm}$ across `M0`-`M7` (PMOS differential pair `M2, M3`; tail mirror `M0, M1`; NMOS active load `M4, M5`; NMOS common-source stage `M7` with PMOS load `M6`):
+1. **Analytical Hand Design (`analysis/opamp_analytical_bench.py`)**: Tail current $I_{D1} = 300\,\mu\text{A}$ ($I_0 = 100\,\mu\text{A}$), Stage 2 bias $I_{D6} = 320.45\,\mu\text{A}$, $C_c = 1.213\,\text{pF}$, and nulling resistor $R_z = 343.5\,\Omega$ placing the transmission zero in the left-half plane ($\omega_z < 0$).
+2. **Spectre Schematic Tuning (`CA3` Final)**: Tuned compensation and reference branch in Spectre to **$I_0 = 185\,\mu\text{A}$**, **$C_c = 3\,\text{pF}$**, and **$R_z = 1\,\text{k}\Omega$** for robust phase margin and swing across temperature and process extremes.
+
+#### Verified 3-Corner PVT Matrix (`V_DD = 1.8 V`)
+
+| Corner | Process | Temp ($^\circ\text{C}$) | DC Gain ($A_{v0}$) | UGBW ($\text{MHz}$) | Phase Margin | Max CMRR ($\text{dB}$) | Max Swing ($\text{V}$) | Total Current (AC / DC) |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Nominal** | `TT` | $+27$ | **$64.5\,\text{dB}$** | **$357$** | **$74^\circ$** | **$72.6$** | **$1.41$** | $545\,\mu\text{A}$ / $525\,\mu\text{A}$ |
+| **Fast** | `FF` | $-40$ | **$60.2\,\text{dB}$** | **$520$** | **$60^\circ$** | **$68.1$** | **$1.51$** | $557\,\mu\text{A}$ / $526\,\mu\text{A}$ |
+| **Slow** | `SS` | $+120$ | **$63.0\,\text{dB}$** | **$233$** | **$92^\circ$** | **$71.7$** | **$1.34$** | $543\,\mu\text{A}$ / $525\,\mu\text{A}$ |
 
 <p align="center">
-  <img src="docs/media/frequency_response_miller_cap.png" width="48%" alt="Frequency Response with Miller Compensation" />
-  <img src="docs/media/cadence_analog_design_environment_adel.png" width="48%" alt="Cadence ADE-L State Setup" />
+  <img src="docs/media/ca3_twostage_miller_schematic.png" width="48%" alt="CA3 PMOS-Input Two-Stage Miller Op-Amp Schematic" />
+  <img src="docs/media/ca3_cmrr_tt27_72db.png" width="48%" alt="CA3 CMRR AC Sweep at TT 27C (72.6 dB)" />
 </p>
 
 ---
 
 ### 4. Cadence Virtuoso Laboratory Curriculum (`04-cadence-virtuoso-lab-modules`)
 
-A complete 5-module lab series covering analog building blocks to full physical implementation:
-
-1. **Lab 1: Single-Stage High-Frequency Amplifiers (`Lab1_SingleStage_CS_CG_Cascode`)**:
-   - Small-signal parameter extraction, Miller effect on gate-drain capacitance $C_{gd}$, and input impedance analysis.
-   - Bandwidth comparison: Cascode vs. Common-Source ($> 3\times$ bandwidth extension in Cascode due to suppression of Miller multiplication).
-2. **Lab 2: Differential Amplifiers with Active Loads (`Lab2_Differential_Amplifiers`)**:
-   - Differential vs. common-mode half-circuits.
-   - Slew-rate calculation: $\text{SR} = I_{tail} / C_L$.
-   - CMRR evaluation across tail current source output resistance.
-3. **Lab 3: Precision Current Mirrors & Bias Design (`Lab3_Current_Mirrors_Biasing`)**:
-   - Simple, Cascode, and High-Swing Cascode current mirrors.
-   - Minimum voltage headroom: $V_{min} = 2 V_{ov}$ with maximum output resistance $R_{out} \approx g_m r_o^2$.
-4. **Lab 4: Feedback Amplifiers & Frequency Compensation (`Lab4_Feedback_Frequency_Compensation`)**:
-   - Closed-loop stability, phase margin analysis, and pole-zero doublet tracking.
-   - Step response overshoot characterization ($PM = 45^\circ \to 23\%$ overshoot, $PM = 60^\circ \to 8.7\%$ overshoot, $PM \ge 70^\circ \to \text{negligible ringing}$).
-5. **Lab 5: Physical CMOS IC Layout & Post-Layout Extraction (`Lab5_Layout_DRC_LVS_PostLayout`)**:
-   - Full-custom layout using multi-finger transistors, common-centroid matching, and dummy strips.
-   - Design Rule Check (**DRC Clean**) & Layout Versus Schematic (**LVS Clean**).
-   - Parasitic RC extraction and post-layout Spectre simulation verifying $< 6\%$ gain degradation under interconnect loading.
+Five structured laboratory modules in Persian PDF manuals with accompanying OpenAccess libraries where implemented:
+1. **Lab 1 (`Lab1_SingleStage_CS_CG_Cascode`)**: Frequency response of Common-Source, Common-Gate, and Cascode stages (`Lab1_Manual.pdf` + `cadence_oa`: `CS_Amp`, `CG_Amp`, `Cascode_Amp`).
+2. **Lab 2 (`Lab2_Differential_Amplifiers`)**: Differential amplifier small-signal and frequency response (`Lab2_Manual.pdf`).
+3. **Lab 3 (`Lab3_Current_Mirrors_Biasing`)**: Current mirrors and biasing architectures (`Lab3_Manual.pdf`).
+4. **Lab 4 (`Lab4_Feedback_Frequency_Compensation`)**: Feedback amplifiers and frequency compensation (`Lab4_Manual.pdf` + `cadence_oa`: `Amplifier`, `Bias`, `CMFB`, `OPAMP`).
+5. **Lab 5 (`Lab5_Layout_DRC_LVS_PostLayout`)**: Physical layout and post-layout flow (`Lab5_Manual.pdf` + `cadence_oa`: `Amplifier`, `Bias`, `CMFB`, `OPAMP`, `TotalAMP` including `layout.oa`).
 
 ---
 
 ## Academic Coursework Reports
 
-The complete set of formal technical reports is archived in [`reports/`](reports/):
+Formal technical reports are archived in [`reports/`](reports/):
 
-| Document | Description | Direct Link |
-|:---|:---|:---:|
-| **CA1: MOSFET Characterization & Cascode Design** | 22-page engineering report detailing 180nm device characterization, $g_m/I_D$, thermal sweeps, and cascode amplifiers. | [PDF Link](reports/CA1_MOSFET_Characterization_Cascode_AlirezaNajafi.pdf) |
-| **CA2: Precision Biasing & Common-Mode Feedback** | 14-page report on multi-node bias synthesis, CMFB loop dynamics ($938\,\text{MHz}$), and op-amp core design. | [PDF Link](reports/CA2_CMFB_Biasing_OpAmp_AlirezaNajafi.pdf) |
-| **CA3: Final Project — Two-Stage Miller Op-Amp** | Comprehensive design report featuring hand calculations, Miller compensation ($C_c, R_z$), and 6-corner PVT analysis. | [PDF Link](reports/CA3_Final_Project_TwoStage_Miller_CMFB_OpAmp.pdf) |
+| Document | Pages | Contents Verified | Direct Link |
+|:---|:---:|:---|:---:|
+| **CA1: MOSFET Characterization & CS Analysis** | 22 | TSMC 180nm LC/SC parameter extraction, W/L and thermal sweeps, $f_T$ corners, and CS gain/impedance checks. | [PDF Link](reports/CA1_MOSFET_Characterization_Cascode_AlirezaNajafi.pdf) |
+| **CA2: Folded-Cascode OTA & High-Speed CMFB** | 14 | Reference biasing (`~201 uA`), CMFB loop (`938.64 MHz`), AC gain (`62.58 dB`), and `UGBW` (`524.5 MHz`). | [PDF Link](reports/CA2_CMFB_Biasing_OpAmp_AlirezaNajafi.pdf) |
+| **CA3: Two-Stage Miller Op-Amp Final Project** | 8 | Hand design (`analysis/opamp_analytical_bench.py`), Spectre tuning (`Cc=3 pF, Rz=1 kOhm, I0=185 uA`), and 3-corner PVT table. | [PDF Link](reports/CA3_Final_Project_TwoStage_Miller_CMFB_OpAmp.pdf) |
 
 ---
 
-## Cadence Virtuoso Setup & Reproduction
+## Analytical Benchmark & Reproduction
 
-### Prerequisites
-- **Cadence Virtuoso IC617 / IC618 / ICADV** or newer.
-- **Spectre Circuit Simulator** (MMSIM 15+ or SPECTRE 19+).
-- **TSMC 180nm CMOS PDK** (`tsmc18rf`).
+### 1. Run Python Small-Signal Hand-Design Benchmark (`analysis/`)
+```bash
+python analysis/opamp_analytical_bench.py
+```
 
-### Loading Design Libraries
-1. Clone this repository into your Cadence working environment:
+### 2. Load OpenAccess Libraries in Cadence Virtuoso
+1. Clone the repository into a Linux Cadence workspace with `tsmc18rf` installed:
    ```bash
    git clone https://github.com/alirezanmotiei/Analog-Integrated-Circuits-Cadence-Virtuoso.git
    cd Analog-Integrated-Circuits-Cadence-Virtuoso
    ```
-2. Verify that `cds.lib` points to the respective OpenAccess libraries:
-   ```text
-   DEFINE ElecIII_CA1 ./01-mosfet-characterization-cascode/cadence_oa
-   DEFINE ElecIII_CA2 ./02-cmfb-biasing-twostage-opamp/cadence_oa
-   DEFINE ElecIII_CA3_Final ./03-twostage-miller-cmfb-opamp-final/cadence_oa
-   DEFINE Lab1_SingleStage ./04-cadence-virtuoso-lab-modules/Lab1_SingleStage_CS_CG_Cascode/cadence_oa
-   DEFINE Lab4_Feedback ./04-cadence-virtuoso-lab-modules/Lab4_Feedback_Frequency_Compensation/cadence_oa
-   DEFINE Lab5_Layout ./04-cadence-virtuoso-lab-modules/Lab5_Layout_DRC_LVS_PostLayout/cadence_oa
-   ```
-3. Launch Cadence Virtuoso:
-   ```bash
-   virtuoso &
-   ```
-4. Open **Library Manager** (`Tools -> Library Manager`), navigate to `ElecIII_CA3_Final -> Total -> schematic`.
-5. Launch **ADE-L** (`Launch -> ADE L`), select simulator `spectre`, load model files (`tsmc18rf.scs`), and execute AC/Transient analyses.
+2. Check [`cds.lib`](cds.lib) to verify library paths (`ElecIII_CA1`, `ElecIII_CA2`, `ElecIII_CA3_Final`, `Lab1_SingleStage`, `Lab4_Feedback`, `Lab5_Layout`), then launch `virtuoso &` and run **Spectre ADE-L** with the `tsmc18rf` PDK models.
 
 ---
 
 ## Academic Integrity & Authorship
 
-- **Course**: Analog Integrated Circuit Design / Electronics III & Electronics III Laboratory
-- **Institution**: Department of Electrical and Computer Engineering, **University of Tehran**
-- **Academic Term**: Spring 2024
-- **Instructors**: **Dr. Samad Sheikhaei**, **Dr. Omid Shoaei**, **Dr. Alireza Navid**
-- **Author & Designer**: **Alireza Najafi Motiei** (`810100224`)
+- **Courses**: Electronics III & Electronics III Laboratory
+- **Institution**: School of Electrical and Computer Engineering, **University of Tehran**
+- **Academic Semesters**: Spring 2023 (`CA1`, `CA2`) - Spring 2024 (`CA3`)
+- **Course Instructor**: **Dr. Alireza Navid**
+- **Author**: **Alireza Najafi Motiei** (`810100224`)
 
 ---
 
@@ -308,4 +247,4 @@ The complete set of formal technical reports is archived in [`reports/`](reports
 2. **P. R. Gray, P. J. Hurst, S. H. Lewis, and R. G. Meyer**, *Analysis and Design of Analog Integrated Circuits*, 5th Edition, John Wiley & Sons, 2009.
 3. **P. E. Allen and D. R. Holberg**, *CMOS Analog Circuit Design*, 3rd Edition, Oxford University Press, 2011.
 4. **D. A. Johns and K. Martin**, *Analog Integrated Circuit Design*, 2nd Edition, John Wiley & Sons, 2011.
-5. **TSMC 0.18&mu;m Mixed-Signal / RF 1P6M Process Design Kit (PDK) Documentation**, Taiwan Semiconductor Manufacturing Company.
+5. **TSMC 0.18 um Mixed-Signal / RF 1P6M Process Design Kit (PDK) Documentation**.
